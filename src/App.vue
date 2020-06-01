@@ -7,12 +7,27 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+/*
+const defaultItem = () => {
+  return {
+      key: util.makeKey(), // 동일 item 검증
+      subject: '',
+      text : '',
+      status : 'doing', // doing, complete
+      expireDate : null,
+      registDate : new Date().format
+  }
+}
+*/
 
 export default {
   name: 'App',
   components: {
     HelloWorld
-  }
+  },
+  mounted() {
+    this.$store.dispatch("fetchItems", []);
+  },
 }
 </script>
 
