@@ -60,17 +60,3 @@ export default new Vuex.Store({
     }
   }
 });
-
-// YYYY-MM-DD format
-Date.prototype.format8n = function() {
-  let date = this;
-  return date.getFullYear() + "-" + (date.getMonth() + 1).zf(2) + "-" + date.getDate().zf(2);
-}
-
-// zero-fill
-Number.prototype.zf = function (len) {
-  var s = String(this), c = '0';
-  len = len || 2;
-  while (s.length < len) s = c + s;
-  return s;
-}

@@ -34,7 +34,7 @@ const defaultItem = () => {
       text : '',
       status : false, // (false)doing, (true)complete
       expireDate : null,
-      registDate : util.getDateFormat(new Date())
+      registDate : new Date()
   }
 }
 
