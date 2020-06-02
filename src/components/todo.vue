@@ -22,10 +22,10 @@
         <div class="todo-form">
             <div class="todo-content">
                 <input type="hidden" v-model="todoForm.status" name="form_status" >
-                <input type="text" v-model="todoForm.subject" name="form_subject" placeholder="제목" class="input" >
-                <textarea name="form_text" class="textarea" v-model="todoForm.text" placeholder="메모"/>
-                <input type="date" v-model="todoForm.expireDate" name="form_date" class="input" placeholder="마감일" >
-                <button type="button" class="todo-submit" @click="doWrite()">작성</button>
+                <input type="text" v-model="todoForm.subject" name="form_subject" placeholder="Title" class="input" >
+                <textarea name="form_text" class="textarea" v-model="todoForm.text" placeholder="Memo"/>
+                <input type="date" v-model="todoForm.expireDate" name="form_date" class="input" placeholder="Expire Date" >
+                <button type="button" class="todo-submit" @click="doWrite()">SUBMIT</button>
             </div>
         </div>
     </div>

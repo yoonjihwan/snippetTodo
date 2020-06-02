@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <h1 class="title">Todo List</h1>
         <Todo />
     </div>
 </template>
@@ -26,6 +27,9 @@ export default {
 <style>
 body {
   background-color: #1b1b1b;
+}
+h1.title {
+  color: #FFF;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
