@@ -20,44 +20,51 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_ITEM: async (state, payload) => {
-      let itemIndex = await _.findKey(state.items, { key : payload.items.key})
-      if(itemIndex){
-        state.items[itemIndex] = await payload.items
-        await setStorage(payload.key, this.state.items)
+      let itemIndex = await _.findIndex(state.items, function(o) { return o.key == payload.item.key });
+      console.log(itemIndex)
+      if(itemIndex > -1){
+        state.items[itemIndex] = await payload.item
+        await setStorage(payload.key, state.items)
       } else {
-        await state.item.push(payload.items)
+        await state.items.push(payload.item)
         await setStorage(payload.key, state.items)
       }
     },
     FETCH_ITEMS: async (state, payload) => {
-      state.items = await payload.items
-      await setStorage(payload.key, state.items)
+      state.items = await payload.items;
+      state.key = await payload.key;
+      setStorage(payload.key, state.items)
     }
   },
   getters : {
     allItems(state) {
       return state.items;
-    },
-    findItem(state, payload) {
-      return _.find(state.items, payload)
     }
+    //findItem(state, payload) {
+    //  return _.find(state.items, payload)
+    //}
   },
   actions : {
     setItem(store, payload) {
-      store.commit('SET_ITEM', { key : this.STORAGE_KEY, items: payload });
+      store.commit('SET_ITEM', { key : this.STORAGE_KEY, item: payload });
     },
-    fetchItems(store) {
-      console.log(this.STORAGE_KEY)
-      let items = getStorage()
-      store.commit('FETCH_ITEMS', { key : this.STORAGE_KEY, items : items });
+    fetchItems(store, payload) {
+      store.commit('FETCH_ITEMS', { key : this.STORAGE_KEY, items : payload });
+    },
+    initItems(store) {
+      return new Promise((resolve) => {
+        let items = getStorage(this.STORAGE_KEY)
+        store.commit('FETCH_ITEMS', { key : this.STORAGE_KEY, items : items });
+        resolve(items);
+      });
     }
   }
 });
 
-// YYYYMMDD Format
+// YYYY-MM-DD format
 Date.prototype.format8n = function() {
   let date = this;
-  return date.getFullYear() + (date.getMonth() + 1).zf(2) + date.getDate().zf(2);
+  return date.getFullYear() + "-" + (date.getMonth() + 1).zf(2) + "-" + date.getDate().zf(2);
 }
 
 // zero-fill

@@ -1,33 +1,25 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <Todo />
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-/*
-const defaultItem = () => {
-  return {
-      key: util.makeKey(), // 동일 item 검증
-      subject: '',
-      text : '',
-      status : 'doing', // doing, complete
-      expireDate : null,
-      registDate : new Date().format
-  }
-}
-*/
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Todo: () => import('./components/todo')
   },
   mounted() {
-    this.$store.dispatch("fetchItems", []);
+    this.$store.dispatch("initItems");
+    this.$eventHub.$on("SHOW_MESSAGE", this.showMessage);
   },
+  methods: {
+    showMessage(message, type) {
+      alert(type + " : " + message)
+    }
+  }
 }
 </script>
 
