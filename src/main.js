@@ -2,9 +2,14 @@ import Vue from 'vue'
 import Vuex from "vuex";
 import App from './App.vue'
 import store from "./store";
-
+import Toasted from 'vue-toasted';
+ 
 Vue.config.productionTip = false
 Vue.prototype.$eventHub = new Vue(); // Global event bus
+Vue.use(Toasted, {
+  duration: 4000
+})
+
 Vue.prototype.STORAGE_KEY = "SNIPPET-TODO";
 Vuex.Store.prototype.STORAGE_KEY = "SNIPPET-TODO";
 

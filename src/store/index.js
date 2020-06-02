@@ -21,7 +21,6 @@ export default new Vuex.Store({
   mutations: {
     SET_ITEM: async (state, payload) => {
       let itemIndex = await _.findIndex(state.items, function(o) { return o.key == payload.item.key });
-      console.log(itemIndex)
       if(itemIndex > -1){
         state.items[itemIndex] = await payload.item
         await setStorage(payload.key, state.items)

@@ -19,7 +19,7 @@ export default util
 
 Date.prototype.format8n = function() {
     let date = this;
-    return date.getFullYear() + (date.getMonth() + 1).zf(2) + date.getDate().zf(2);
+    return date.getFullYear() + "-" + (date.getMonth() + 1).zf(2) + "-" + date.getDate().zf(2);
 }
 
 // zero-fill
