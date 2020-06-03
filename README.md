@@ -1,24 +1,15 @@
 # snippet-todo
 
-## Project setup
-```
-npm install
-```
+[![npm version](https://badge.fury.io/js/npm.svg)](https://badge.fury.io/js/npm)
 
-### Compiles and hot-reloads for development
-```
+### Usage
+
+```shell
+npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Contributer
 
-### Lints and fixes files
-```
-npm run lint
-```
+@yoonjihwan
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

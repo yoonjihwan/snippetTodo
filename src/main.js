@@ -3,7 +3,9 @@ import Vuex from "vuex";
 import App from './App.vue'
 import store from "./store";
 import Toasted from 'vue-toasted';
- 
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
 Vue.config.productionTip = false
 Vue.prototype.$eventHub = new Vue(); // Global event bus
 Vue.use(Toasted, {

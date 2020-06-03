@@ -1,5 +1,8 @@
 <template>
     <div class="todo">
+        <div class="todos-calendar">
+            <datepicker v-model="currentDate" :inline="true"/>
+        </div>
         <div class="todos-list">
             <ul class="todos-list-items">
                 <draggable v-model="todos" @start="drag=true" @end="doUpdateOrder">
@@ -11,10 +14,11 @@
                         <div class="todo-memo" :class="{ complete : todos[$index].status }" @click="setEdit($index)">
                             <p>{{todos[$index].subject}}</p>
                             <p class="text">{{todos[$index].text}}</p>
+                            <p class="sub-text">Expire Date : {{todos[$index].expireDate || '-'}}</p>
                         </div>
-                        <!--div class="todo-submit">
-                            <button type="button" name="form_delete" @click="doDelete($index)">삭제</button>
-                        </div-->
+                        <div class="todo-submit" @click="doDelete($index)">
+                            <i class="fas fa-trash-alt" />
+                        </div>
                     </li>
                 </draggable>
             </ul>
@@ -22,10 +26,13 @@
         <div class="todo-form">
             <div class="todo-content">
                 <input type="hidden" v-model="todoForm.status" name="form_status" >
-                <input type="text" v-model="todoForm.subject" name="form_subject" placeholder="Title" class="input" >
-                <textarea name="form_text" class="textarea" v-model="todoForm.text" placeholder="Memo"/>
-                <input type="date" v-model="todoForm.expireDate" name="form_date" class="input" placeholder="Expire Date" >
-                <button type="button" class="todo-submit" @click="doWrite()">SUBMIT</button>
+                <label for="form_date" class="form-label">Title</label>
+                <input type="text" v-model="todoForm.subject" name="form_subject" placeholder="" class="input" >
+                <label for="form_date" class="form-label">Memo</label>
+                <textarea name="form_text" class="textarea" v-model="todoForm.text" placeholder=""/>
+                <label for="form_date" class="form-label">Expire Date</label>
+                <input type="date" id="form_date" v-model="todoForm.expireDate" name="form_date" class="input form-date" placeholder="Expire Date" >
+                <button type="button" class="form-submit" @click="doWrite()">SUBMIT</button>
             </div>
         </div>
     </div>
@@ -33,6 +40,7 @@
 
 <script>
 import draggable from 'vuedraggable'
+import Datepicker from 'vuejs-datepicker';
 import util from "@/util"
 import _ from 'lodash'
 
@@ -51,13 +59,15 @@ export default {
   name: "Todo",
   components: {
       draggable,
+      Datepicker
   },
   data() {
     return {
       todos: [],
       todoForm: defaultItem(), // init
       drag: false,
-      alarmId: null
+      alarmId: null,
+      currentDate: new Date()
     }
   },
   mounted() {    
@@ -136,11 +146,21 @@ div.todo {
 }
 .todos-list-items li.item{
   width: 100%;
-  height: 60px;
+  height: 70px;
   border-radius: 6px;
   border-bottom: 1px solid #2f2f2f;
 }
+.todos-list-items li.item:hover .todo-submit {
+  color: #FFF;
+  cursor: pointer;
+}
 /* Content */
+.todos-calendar {
+  position: absolute;
+  width: 340px;
+  height: 250px;
+  right: calc(50% - 820px)
+}
 .todo-handler {
   float: left;
   width: 30px;
@@ -166,6 +186,11 @@ div.todo {
   font-weight: 400;
   font-size: 14px;
 }
+.todo-memo p.sub-text {
+  font-weight: 200;
+  font-size: 11px;
+  line-height: 11px;
+}
 .todo-memo.complete {
   text-decoration: line-through;
 }
@@ -175,7 +200,7 @@ div.todo {
 }
 .todo-content .input, .todo-content .textarea {
   float: left;
-  width: 100%;
+  width: calc(100% - 130px);
   height: 30px;
   border: 0px solid;
   border-bottom: 1px solid #2f2f2f;
@@ -188,19 +213,33 @@ div.todo {
   overflow: hidden;
   resize: none;
 }
-.todo-submit {
-  margin-top: 10px;
-  width: 100%;
-  height: 40px;
-  background: transparent;
-  border: 1px solid #2f2f2f;
+.form-label {
+  float:left;
   color: #a5a5a5;
+  font-size: 14px;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+  padding-right: 10px;
 }
-.todo-submit:hover {
-  border: 1px solid #a5a5a5;
-  cursor: pointer;
+.todo-submit {
+  float:right;
+  width: 48px;
+  height: 60px;
+  line-height: 60px;
+  background: transparent;
+  color: #2f2f2f;
 }
 /* todo form */
+.form-submit {
+  width: 100%;
+  cursor: pointer;
+  background: transparent;
+  height: 40px;
+  border: 1px solid #a5a5a5;
+  color: #a5a5a5;
+}
 
 /* Round */
 .round {
