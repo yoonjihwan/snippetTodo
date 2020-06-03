@@ -7,6 +7,9 @@
             <ul class="todos-list-items">
                 <draggable v-model="todos" @start="drag=true" @end="doUpdateOrder">
                     <li v-for="(item, $index) in todos" :key="`todo-${item.key}`" class="item">
+                        <div class="todo-order">
+                            <i class="fas fa-grip-lines-vertical handle" />
+                        </div>
                         <div class="round todo-handler">
                             <input type="checkbox" v-model="todos[$index].status" name="form_status" :id="`status-${item.key}`" @change="doUpdate($index)" >
                             <label :for="`status-${item.key}`" />
@@ -150,11 +153,19 @@ div.todo {
   border-radius: 6px;
   border-bottom: 1px solid #2f2f2f;
 }
-.todos-list-items li.item:hover .todo-submit {
+.todos-list-items li.item:hover .todo-submit, .todos-list-items li.item:hover .todo-order {
   color: #FFF;
   cursor: pointer;
 }
 /* Content */
+.todo-order {
+  float: left;
+  width: 30px;
+  line-height: 40px;
+  text-align: center;
+  margin: 15px 0px;
+  color: #2f2f2f;
+}
 .todos-calendar {
   position: absolute;
   width: 340px;
@@ -168,7 +179,7 @@ div.todo {
 }
 .todo-memo {
   float: left;
-  width: calc(100% - 100px);
+  width: calc(100% - 130px);
   padding: 9px 5px;
   border: 0px solid;
   text-align: left;
